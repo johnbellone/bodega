@@ -1,6 +1,7 @@
 (ns bodega.main
   (:gen-class)
-  (:require [com.stuartsierra.component :as component]
+  (:require [clojure.java.io :as io]
+            [com.stuartsierra.component :as component]
             [duct.middleware.errors :refer [wrap-hide-errors]]
             [meta-merge.core :refer [meta-merge]]
             [bodega.config :as config]
@@ -8,7 +9,7 @@
 
 (def prod-config
   {:app {:middleware     [[wrap-hide-errors :internal-error]]
-         :internal-error "Internal Server Error"}})
+         :internal-error (io/resource "bodega/errors/500.html")}})
 
 (def config
   (meta-merge config/defaults
